@@ -1,0 +1,30 @@
+# ROS 2
+build/
+install/
+log/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Python packaging
+*.egg-info/
+dist/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.swp
+*.tmp
