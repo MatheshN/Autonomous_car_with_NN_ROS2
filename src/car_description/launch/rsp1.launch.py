@@ -114,16 +114,34 @@ def generate_launch_description():
     # 6. Gazebo LiDAR -> ROS 2 LaserScan
     # ============================================================
 
-    lidar_bridge = Node(
+    # lidar_bridge = Node(
+    #     package='ros_gz_bridge',
+    #     executable='parameter_bridge',
+    #     arguments=[
+    #         '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'
+    #     ],
+    #     output='screen',
+    #     parameters=[{'use_sim_time': True}]
+    # )
+    # ============================================================
+    # 6(a). Gazebo 3D LiDAR & Camera Bridges -> ROS 2
+    # ============================================================
+    sensor_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=[
-            '/scan@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan'
+            # Gazebo 3D PointCloud topic -> ROS 2 PointCloud2
+            '/lidar_points/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked',
+            # Camera
+            '/camera/image_raw@sensor_msgs/msg/Image[gz.msgs.Image',
+            '/camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo'
+        ],
+        remappings=[
+            ('/lidar_points/points', '/lidar_points')
         ],
         output='screen',
         parameters=[{'use_sim_time': True}]
     )
-
 
     # ============================================================
     # 7. Spawn Robot into Gazebo
@@ -193,7 +211,7 @@ def generate_launch_description():
 
         # Topic Bridges
         clock_bridge,
-        lidar_bridge,
+        sensor_bridge,
 
         # Entity Spawner
         spawn_entity,

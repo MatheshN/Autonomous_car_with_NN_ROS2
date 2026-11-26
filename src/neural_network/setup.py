@@ -27,6 +27,7 @@ setup(
             'mock_lidar = neural_network.mock_lidar_pub:main',
             'gesture_control = neural_network.gesture_control:main',
             'brain = neural_network.brain:main',
-        ],
+            'autopilot_node = neural_network.autopilot:main'
+        ],  
     },
 )

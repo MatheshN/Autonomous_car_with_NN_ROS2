@@ -1,0 +1,115 @@
+  <!-- ========================================================= -->
+<!-- 2D LIDAR LINK                                             -->
+<!-- ========================================================= -->
+
+<link name="lidar_link">
+
+  <!-- Simple visual representation of the LiDAR -->
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+
+    <geometry>
+      <cylinder radius="0.08" length="0.08"/>
+    </geometry>
+
+    <material name="black">
+      <color rgba="0.05 0.05 0.05 1.0"/>
+    </material>
+  </visual>
+
+  <!-- Simple collision -->
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+
+    <geometry>
+      <cylinder radius="0.08" length="0.08"/>
+    </geometry>
+  </collision>
+
+  <!-- Very small sensor mass -->
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="0.5"/>
+
+    <inertia
+      ixx="0.001"
+      ixy="0"
+      ixz="0"
+      iyy="0.001"
+      iyz="0"
+      izz="0.001"/>
+  </inertial>
+
+</link>
+
+
+<!-- ========================================================= -->
+<!-- BASE LINK -> LIDAR                                         -->
+<!-- ========================================================= -->
+
+<joint name="lidar_joint" type="fixed">
+
+  <!--
+       x = 0
+       y = 0
+       z = 0.80 m above base_link
+  -->
+    <origin
+      xyz="0 0 0.80"
+      rpy="0 0 0"/>
+
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+
+  </joint>
+
+  <!-- ========================================================= -->
+<!-- GAZEBO 2D LIDAR SENSOR                                    -->
+<!-- ========================================================= -->
+
+  <gazebo reference="lidar_link">
+
+    <sensor name="lidar" type="gpu_lidar">
+
+      <!-- 10 scans per second -->
+      <update_rate>10</update_rate>
+
+      <topic>/scan</topic>
+
+      <gz_frame_id>lidar_link</gz_frame_id>
+
+      <lidar>
+
+        <scan>
+
+          <horizontal>
+
+            <!-- 360 degree scan -->
+            <samples>360</samples>
+
+            <resolution>1</resolution>
+
+            <min_angle>-3.14159265</min_angle>
+            <max_angle>3.14159265</max_angle>
+
+          </horizontal>
+
+        </scan>
+
+        <range>
+
+          <!-- Minimum detectable distance -->
+          <min>0.10</min>
+
+          <!-- Maximum detection distance -->
+          <max>20.0</max>
+
+          <resolution>0.01</resolution>
+
+        </range>
+
+      </lidar>
+
+    </sensor>
+
+  </gazebo>

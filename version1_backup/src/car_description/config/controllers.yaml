@@ -1,0 +1,51 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    ackermann_steering_controller:
+      type: ackermann_steering_controller/AckermannSteeringController
+
+
+ackermann_steering_controller:
+  ros__parameters:
+
+    # ============================
+    # JOINTS
+    # ============================
+
+    traction_joints_names:
+      - wheel_rl_joint
+      - wheel_rr_joint
+
+    steering_joints_names:
+      - steer_fl_joint
+      - steer_fr_joint
+
+
+    # ============================
+    # VEHICLE GEOMETRY
+    # ============================
+
+    wheelbase: 2.652
+
+    traction_track_width: 1.600
+
+    steering_track_width: 1.638
+
+    traction_wheels_radius: 0.36
+
+
+    # ============================
+    # ODOMETRY
+    # ============================
+
+    open_loop: false
+
+    enable_odom_tf: true
+
+    odom_frame_id: odom
+
+    base_frame_id: base_footprint
